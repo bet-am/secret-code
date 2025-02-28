@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 INPUT 1 OUTPUT TEMPLATE</title>
+    <style>
+        body {
+            background-color: lavender;
+            margin: 100px;
+        }
+
+        /* STYLE FOR THE INPUT FIELD */
+        #charInput1,
+        #charInput2 {
+            background-color: aliceblue;
+            color: darkslateblue;
+            border: 5px solid darkslateblue;
+            height: 75px;
+            width: 75px;
+            font-size: 60px;
+            padding: 5px;
+            text-align: center;
+            margin: 25px;
+        }
+
+        #charInput1:hover,
+        #charInput2:hover {
+            background-color: lightsteelblue;
+        }
+
+        /* STYLE FOR THE SUBMIT BUTTON */
+        #checkButton {
+            margin: 25px;
+            background-color: aliceblue;
+            font-size: 16px;
+            padding: 10px;
+            color: darkslateblue;
+            border: 5px solid;
+        }
+
+        #checkButton:hover {
+            background-color: lightsteelblue;
+        }
+
+        /* STYLE FOR THE IMAGE */
+        #displayedImage {
+            display: none;
+            border: 5px solid brown;
+            width: 22vw;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .left {
+            background-color: lightblue;
+            border: 5px solid darkslateblue;
+            margin: 25px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .right {
+            background-color: lightcoral;
+            border: 5px solid brown;
+            margin: 25px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-items: center;
+        }
+
+        h1 {
+            color: darkslateblue;
+            font-size: 35px;
+            text-align: center
+        }
+
+        h2,
+        h3 {
+            color: darkslateblue;
+        }
+
+        h4 {
+            font-size: 100px;
+            color: brown;
+            letter-spacing: 7px;
+            text-align: center;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            text-shadow: 4px 4px indianred;
+        }
+
+        h5 {
+            font-size: 35px;
+            color: brown;
+            margin: 0px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .decoded {
+            text-shadow: 2px 2px 5px darkred;
+            /* Shadow effect for decoded letters */
+            color: darkred;
+            /* Change color for better visibility */
+            font-weight: bold;
+        }
+
+        /* Default (for large screens) - No changes needed */
+
+        /* Medium Screens (Tablets) */
+        @media (max-width: 1024px) {
+            body {
+                margin: 50px;
+            }
+
+            .container {
+                flex-direction: column;
+                /* Stack columns vertically */
+                align-items: center;
+            }
+
+            .column {
+                width: 90%;
+                /* Make columns take up more width */
+            }
+
+            h4 {
+                font-size: 70px;
+                /* Reduce font size for better fit */
+            }
+
+            #charInput1,
+            #charInput2 {
+                width: 60px;
+                height: 60px;
+                font-size: 50px;
+            }
+        }
+
+        /* Small Screens (Phones) */
+        @media (max-width: 600px) {
+            body {
+                margin: 40px;
+            }
+
+            .container {
+                flex-direction: column;
+                /* Stack the two sections */
+                align-items: center;
+            }
+
+            .column {
+                width: 100%;
+                /* Full width for small screens */
+                padding: 10px;
+            }
+
+            h4 {
+                font-size: 50px;
+                /* Reduce font size further */
+            }
+
+
+
+            #charInput1,
+            #charInput2 {
+                width: 50px;
+                height: 50px;
+                font-size: 40px;
+            }
+
+            #checkButton {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            #displayedImage {
+                max-width: 80%;
+                /* Ensure images are responsive */
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="column left">
+            <h1>Decode Me!</h1>
+            <h2>Enter two letters at a time...</h2>
+            <br>
+
+            <h3>The first one corresponds to the secret code</h3>
+            <input type="text" id="charInput1" maxlength="1">
+            <h3>The second one is the decoded letter</h3>
+            <input type="text" id="charInput2" maxlength="1">
+            <h3>If you cracked the code, the letters will change to the correct letter!</h3>
+
+            <!-- BUTTON TO CHECK LETTERS -->
+            <button onclick="checkLetters()" id="checkButton">Check Letters</button>
+        </div>
+
+        <div class="column right">
+            <h5>The Secret Code:</h5>
+            <h4>NLES L JKBS CLO</h4>
+            <img id="displayedImage" src="" alt="Incorrect Guess Image">
+        </div>
+    </div>
+
+    <script>
+        // Mapping of encoded letters to decoded letters
+        const decodingMap = {
+            'N': 'H', 'L': 'A', 'E': 'V', 'S': 'E',
+            'L': 'A', 'J': 'N', 'K': 'I', 'B': 'C',
+            'S': 'E', 'D': 'C', 'L': 'A', 'O': 'Y'
+        };
+
+        // Store guessed letters persistently
+        let decodedText = "NLES L JKBS CLO".split("");
+
+        // Array of incorrect guess images
+        const incorrectImages = [
+            "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWx2NnlvN3RocHVya2d3cXB5b2V0bXRqNXhyMGZkZG4wd3Zpdm13NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/o75ajIFH0QnQC3nCeD/giphy.gif",
+            "https://media1.giphy.com/media/3o6ZsYm5VFWs98H6Dm/giphy.gif",
+            "https://media3.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif",
+            "https://media2.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif"
+        ];
+
+        function checkLetters() {
+            const input1 = document.getElementById("charInput1").value.toUpperCase();
+            const input2 = document.getElementById("charInput2").value.toUpperCase();
+            const outputText = document.querySelector("h4");
+
+            let newText = "";
+
+            let isCorrect = false;
+
+            // Iterate through the text and replace letters only if they match
+            for (let i = 0; i < decodedText.length; i++) {
+                let originalChar = "NLES L JKBS CLO"[i];
+
+                if (originalChar === input1 && decodingMap[input1] === input2) {
+                    decodedText[i] = input2; // Store the correctly decoded letter
+                    isCorrect = true;
+                }
+
+                // Add a span with text-shadow for correctly decoded letters
+                if (decodingMap[originalChar] === decodedText[i]) {
+                    newText += `<span class="decoded">${decodedText[i]}</span>`;
+                } else {
+                    newText += decodedText[i];
+                }
+            }
+
+            // Update the displayed text
+            outputText.innerHTML = newText;
+
+            // If the input was incorrect, show a random incorrect image
+            if (!isCorrect) {
+                const randomIndex = Math.floor(Math.random() * incorrectImages.length);
+                document.getElementById("displayedImage").src = incorrectImages[randomIndex];
+                document.getElementById("displayedImage").style.display = "block"; // Show image
+            } else {
+                document.getElementById("displayedImage").style.display = "none"; // Hide image if correct
+            }
+        }
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>
