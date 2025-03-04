@@ -9,7 +9,7 @@
     <style>
         body {
             background-color: lavender;
-            margin: 100px;
+            margin: 60px;
         }
 
         /* STYLE FOR THE INPUT FIELD */
@@ -222,13 +222,20 @@
 <body>
     <div class="container">
         <div class="column left">
-            
             <h1>Decode Me!</h1>
             <h2>Enter two letters at a time...</h2>
-            <input type="text" id="charInput1" maxlength="1">
-            <h3>stands for...</h3>
-            <input type="text" id="charInput2" maxlength="1">
-            <h3>If you cracked the code, the letters will change to the correct letter!</h3>
+
+            <div class="grid-container">
+                <div class="grid-item"><input type="text" id="charInput1" maxlength="1"></div>
+                <div class="grid-item">
+                    <h2>stands for...</h2>
+                </div>
+                <div class="grid-item"><input type="text" id="charInput2" maxlength="1"></div>
+            </div>
+
+
+            <h2>If you cracked the code, the letters will change to the correct letter!</h2>
+
 
             <!-- BUTTON TO CHECK LETTERS -->
             <button onclick="checkLetters()" id="checkButton">Check Letters</button>
