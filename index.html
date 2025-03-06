@@ -220,11 +220,22 @@
                 /* Creates 3 equal columns */
                 display: flex;
                 justify-content: center;
+
             }
 
-            .grid-item {
+            .grid-item1 {
+                padding: 1px;
+                text-align: right;
+            }
+
+            .grid-item2 {
                 padding: 1px;
                 text-align: center;
+            }
+
+            .grid-item3 {
+                padding: 1px;
+                text-align: left;
             }
 
             #charInput1,
@@ -254,11 +265,11 @@
             <h2>Enter two letters at a time...</h2>
 
             <div class="grid-container">
-                <div class="grid-item"><input type="text" id="charInput1" maxlength="1"></div>
-                <div class="grid-item">
+                <div class="grid-item1"><input type="text" id="charInput1" maxlength="1"></div>
+                <div class="grid-item2">
                     <h2>stands for...</h2>
                 </div>
-                <div class="grid-item"><input type="text" id="charInput2" maxlength="1"></div>
+                <div class="grid-item3"><input type="text" id="charInput2" maxlength="1"></div>
             </div>
 
 
