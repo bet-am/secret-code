@@ -51,6 +51,10 @@
             background-color: lightsteelblue;
         }
 
+        #checkButton:active {
+            background-color: aliceblue;
+        }
+
         /* STYLE FOR THE IMAGE */
         #displayedImage {
             display: none;
@@ -148,7 +152,7 @@
             font-weight: bold;
         }
 
-                .grid-container {
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             /* Creates 3 equal columns */
@@ -211,6 +215,17 @@
             }
 
 
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+                /* Creates 3 equal columns */
+                display: flex;
+                justify-content: center;
+            }
+
+            .grid-item {
+                padding: 1px;
+                text-align: center;
+            }
 
             #charInput1,
             #charInput2 {
